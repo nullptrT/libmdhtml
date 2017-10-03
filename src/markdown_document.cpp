@@ -69,6 +69,19 @@ bool MarkdownDocument::html_toFile( const std::string path ) const {
 }
 
 
+bool MarkdownDocument::html_toFile( const std::string path, const std::string html ) {
+    std::ofstream file( path );
+    if ( !file.good() ) {
+        return false;
+    }
+    
+    file << html << std::endl;
+    file.close();
+    
+    return true;
+}
+
+
 MarkdownDocument* MarkdownDocument::fromFile( const std::string path ) {
     std::ifstream file( path );
     if ( !file.good() ) {

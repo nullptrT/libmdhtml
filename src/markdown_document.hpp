@@ -43,6 +43,8 @@ public:
     const std::string html() const;
     
     bool html_toFile( const std::string path ) const;
+    static bool html_toFile( const std::string path, const std::string html );
+    
     static MarkdownDocument* fromFile( const std::string path );
 };
 
