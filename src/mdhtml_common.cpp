@@ -47,10 +47,12 @@ bool isEmpty( const std::string str ) {
 bool isEnumeration( const std::string str, const unsigned int start ) {
     bool dot_found = false;
     for ( unsigned int c = start; c < str.length(); c++ ) {
-        if ( !dot_found && !isNum(str.substr(c, 1)) ) {
-            break;
-        } else if ( !dot_found && (char)str[c] == '.' ) {
+        if ( !dot_found && (char)str[c] == '.' ) {
             dot_found = true;
+        } else if ( !dot_found && !isNum(str.substr(c, 1)) ) {
+            break;
+        } else if ( !dot_found && isNum(str.substr(c, 1)) ) {
+            continue;
         } else if ( dot_found && (char)str[c] == ' ' ) {
             return true;
         } else {
