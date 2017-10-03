@@ -93,6 +93,7 @@ const std::string HtmlTag::join( const unsigned int indent_depth ) const {
             } else*/ if ( m_start_tag == "<html>"
                      || m_start_tag == "<li>"
                      || m_start_tag == "<ul>"
+                     || m_start_tag == "<ol>"
             ) {
                 html += "\n" + indent( indent_depth + 4 );
             } else if ( m_start_tag == "<pre>" ) {
@@ -108,6 +109,7 @@ const std::string HtmlTag::join( const unsigned int indent_depth ) const {
         if ( m_start_tag == "<html>"
           || m_start_tag == "<li>"
           || m_start_tag == "<ul>"
+          || m_start_tag == "<ol>"
           || m_start_tag == "<pre>"
         ) {
             html += "\n" + indent( indent_depth );

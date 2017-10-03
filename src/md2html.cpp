@@ -35,11 +35,10 @@ namespace mdhtml {
 HtmlTag* process_heading( const std::string md_text );
 HtmlTag* process_simple_text( const std::string md_text );
 HtmlTag* process_something( HtmlTag* root_tag );
-//HtmlTag* process_( const std::string md_text );
 
 
 const std::string md2html( const std::string markdown_text ) {
-    HtmlTag* html = new HtmlTag("<html>", markdown_text, "</html>");
+    HtmlTag* html = new HtmlTag("<html>", markdown_text + "\n\n", "</html>");
 
     return process_something( html )->html(0);
 }
@@ -64,7 +63,10 @@ HtmlTag* process_something( HtmlTag* root_tag ) {
             size_t end_pos = l;
 
             if ( isList(md_line) ) {
-                while ( !isEmpty(md_lines.at(end_pos))
+                while ( ( isList(md_lines.at(end_pos))
+                       || isList2(md_lines.at(end_pos))
+                       || isListContent(md_lines.at(end_pos))
+                       || isEnumeration2(md_lines.at(end_pos)) )
                      && end_pos < md_lines.size() - 1
                 ) {
                     ++end_pos;
@@ -74,7 +76,46 @@ HtmlTag* process_something( HtmlTag* root_tag ) {
                 l = end_pos; // l is incremented by loop
             } else {
                 while ( ( isList2(md_lines.at(end_pos))
-                       || isListContent(md_lines.at(end_pos)) )
+                       || isListContent(md_lines.at(end_pos))
+                       || isEnumeration2(md_lines.at(end_pos)) )
+                     && end_pos < md_lines.size() - 1
+                ) {
+                    ++end_pos;
+                }
+
+                /*if ( end_pos == md_lines.size() - 1
+                  && !isList2(md_lines.at(end_pos)) ) {
+                    ++ end_pos;
+                }*/
+
+                str = globSection( md_lines, l, end_pos-l  );
+                l = end_pos+1; // l is incremented by loop
+            }
+
+            HtmlTag* list_tag = new HtmlTag("<ul>", str, "</ul>");
+            root_tag->addChild( list_tag );
+            process_something( list_tag );
+        } else if ( root_tag->start_tag() != "<ol>" && (isEnumeration(md_line) || isEnumeration2(md_line)) ) {
+
+            std::string str;
+            size_t end_pos = l;
+
+            if ( isEnumeration(md_line) ) {
+                while ( ( isEnumeration(md_lines.at(end_pos))
+                       || isEnumeration2(md_lines.at(end_pos))
+                       || isListContent(md_lines.at(end_pos))
+                       || isList2(md_lines.at(end_pos)) )
+                     && end_pos < md_lines.size() - 1
+                ) {
+                    ++end_pos;
+                }
+
+                str = globSection( md_lines, l, end_pos-l );
+                l = end_pos; // l is incremented by loop
+            } else {
+                while ( ( isEnumeration2(md_lines.at(end_pos))
+                       || isListContent(md_lines.at(end_pos))
+                       || isList2(md_lines.at(end_pos)) )
                      && end_pos < md_lines.size() - 1
                 ) {
                     ++end_pos;
@@ -84,7 +125,7 @@ HtmlTag* process_something( HtmlTag* root_tag ) {
                 l = end_pos+1; // l is incremented by loop
             }
 
-            HtmlTag* list_tag = new HtmlTag("<ul>", str, "</ul>");
+            HtmlTag* list_tag = new HtmlTag("<ol>", str, "</ol>");
             root_tag->addChild( list_tag );
             process_something( list_tag );
         } else if ( root_tag->start_tag() == "<ul>" && isList(md_line) ) {
@@ -93,13 +134,14 @@ HtmlTag* process_something( HtmlTag* root_tag ) {
 
             size_t end_pos = l;
             while ( ( isListContent(md_lines.at(end_pos))
-                   || isList2(md_lines.at(end_pos)) )
+                   || isList2(md_lines.at(end_pos))
+                   || isEnumeration2(md_lines.at(end_pos)) )
                  && end_pos < md_lines.size() - 1
             ) {
                 ++end_pos;
             }
 
-            size_t len = (end_pos == l ? 1 : (end_pos == md_lines.size()-1 ? md_lines.size()-l : end_pos-l-1));
+            size_t len = (end_pos == l ? 0 : end_pos-l-1);
             std::string str = globSection( md_lines, l, len );
 
             HtmlTag* list_item_tag = new HtmlTag("<li>", str, "</li>");
@@ -112,13 +154,20 @@ HtmlTag* process_something( HtmlTag* root_tag ) {
             md_lines[l] = md_lines[l].substr(4);
 
             size_t end_pos = l;
-            while ( isListContent(md_lines.at(end_pos))
+            while ( ( isListContent(md_lines.at(end_pos))
+                   || isEnumeration2(md_lines.at(end_pos)) )
                  && end_pos < md_lines.size() - 1
             ) {
                 ++end_pos;
             }
 
-            size_t len = (end_pos == md_lines.size()-1 ? 1 : end_pos-l-1);
+            size_t len = (end_pos == l ? 0 : end_pos-l-1);
+
+            if ( end_pos == md_lines.size() - 1
+              && !isList2(md_lines.at(end_pos)) ) {
+                ++len;
+            }
+
             std::string str = globSection( md_lines, l, len );
 
             HtmlTag* list_item_tag = new HtmlTag("<li>", str, "</li>");
@@ -126,8 +175,48 @@ HtmlTag* process_something( HtmlTag* root_tag ) {
             process_something( list_item_tag );
 
             l += len; // l is incremented by loop
-        } // TODO: Enumeration
-        else if ( isHeading( md_line ) ) { // A heading line
+        } else if ( root_tag->start_tag() == "<ol>" && isEnumeration(md_line) ) {
+
+            md_lines[l] = md_lines[l].substr(md_lines[l].find(". ")+2);
+
+            size_t end_pos = l;
+            while ( ( isListContent(md_lines.at(end_pos))
+                   || isEnumeration2(md_lines.at(end_pos))
+                   || isList2(md_lines.at(end_pos)) )
+                 && end_pos < md_lines.size() - 1
+            ) {
+                ++end_pos;
+            }
+
+            size_t len = (end_pos == l ? 0 : (end_pos == md_lines.size()-1 ? md_lines.size()-l : end_pos-l-1));
+            std::string str = globSection( md_lines, l, len );
+
+            HtmlTag* enum_item_tag = new HtmlTag("<li>", str, "</li>");
+            root_tag->addChild( enum_item_tag );
+            process_something( enum_item_tag );
+
+            l += len; // l is incremented by loop
+        } else if ( root_tag->start_tag() == "<ol>" && isEnumeration2(md_line) ) {
+
+            md_lines[l] = md_lines[l].substr(md_lines[l].find(". ")+2);
+
+            size_t end_pos = l;
+            while ( ( isListContent(md_lines.at(end_pos))
+                   || isList2(md_lines.at(end_pos)) )
+                 && end_pos < md_lines.size() - 1
+            ) {
+                ++end_pos;
+            }
+
+            size_t len = (end_pos == l ? 0 : end_pos-l-1);
+            std::string str = globSection( md_lines, l, len );
+
+            HtmlTag* enum_item_tag = new HtmlTag("<li>", str, "</li>");
+            root_tag->addChild( enum_item_tag );
+            process_something( enum_item_tag );
+
+            l += len; // l is incremented by loop
+        } else if ( isHeading( md_line ) ) { // A heading line
             root_tag->addChild( process_heading( md_line ) );
         } else if ( isHorizontalRule( md_line ) ) {
             root_tag->addChild( new HtmlTag("<hr>", "", "") );
