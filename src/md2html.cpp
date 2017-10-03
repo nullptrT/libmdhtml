@@ -26,7 +26,7 @@
 
 #include "md2html.hpp"
 
-#include "common.hpp"
+#include "mdhtml_common.hpp"
 #include "html_tag.hpp"
 
 

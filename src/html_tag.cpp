@@ -26,7 +26,7 @@
 
 #include "html_tag.hpp"
 
-#include "common.hpp"
+#include "mdhtml_common.hpp"
 
 
 namespace mdhtml {

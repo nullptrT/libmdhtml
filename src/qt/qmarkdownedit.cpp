@@ -30,9 +30,9 @@
 
 
 QMarkDownEdit::QMarkDownEdit( QWidget* parent )
-    :   QPlainTextEdit( parent )
+    :   QTextEdit( parent )
 {
-    QObject::connect( this, &QPlainTextEdit::textChanged, this, &QMarkDownEdit::on_textChanged );
+    QObject::connect( this, &QTextEdit::textChanged, this, &QMarkDownEdit::on_textChanged );
 }
 
 
@@ -48,6 +48,7 @@ const QString QMarkDownEdit::toHtml() const {
 
 void QMarkDownEdit::on_textChanged() {
     std::string html = mdhtml::md2html( toPlainText().toStdString() );
+    
     emit htmlChanged( QString().fromStdString(html) );
     emit markdownChanged( toPlainText() );
 }

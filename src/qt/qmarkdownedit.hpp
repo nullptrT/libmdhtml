@@ -26,11 +26,11 @@
 
 #pragma once
 
-#include <QPlainTextEdit>
+#include <QTextEdit>
 
 
 class QMarkDownEdit
-    :   public QPlainTextEdit
+    :   public QTextEdit
 {
     Q_OBJECT
 

@@ -24,7 +24,7 @@
 */
 
 
-#include "common.hpp"
+#include "mdhtml_common.hpp"
 
 #include <cstring>
 
