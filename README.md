@@ -32,7 +32,7 @@ You can simply build this with:
  % make
 ```
 
-On windows you want to use the cmake gui to generate files for MSVC 2015 or later and build it afterwards.
+On windows you may use the `cmake-gui` or `qtcreator` to create build files for MSVC 2015 or later.
 
 
 #### CMake options
@@ -44,7 +44,7 @@ shared library `libMdHtml++.so`. Not using this option builds a static `libMdHtm
 * `MDHTML_BUILD_BIN`: Build the command line utility that converts a markdown document into a html document.
   * `MDHTML_QT_SUPPORT`: Build the libMdHtmlQt
   library providing some widgets and convenience functions for editing markdown with Qt.
-  * `MDHTML_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr` on UNIX and `c:\Program Files` on WIN32)
+  * `MDHTML_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr` on UNIX and `C:\Program Files` on WIN32)
 * `MDHTML_HEADER_INSTALL_DIR`: Can be set to control, where headers are installed. Defaults to `MDHTML_DESTDIR/include/libMDHTML`.
 * `MDHTML_LIB_INSTALL_DIR`: Can be set to control where the library is installed. Defaults to `MDHTML_DESTDIR/lib`.
 * `MDHTML_INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off. If enabled, it installs all headers to `MDHTML_HEADER_INSTALL_DIR` and the libraries to `MDHTML_LIB_INSTALL_DIR`

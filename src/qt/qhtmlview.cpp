@@ -3,7 +3,7 @@
  * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
  **/
 /*
-	LibMdHtml++: A library for converting markdown to html
+	LibMdHtmlQt: A library for editing and showing documents of LibMdHtml++
 	Copyright (C) 2017 Sebastian Lau <lauseb644@gmail.com>
 
 
@@ -24,7 +24,29 @@
 */
 
 
-#pragma once
+#include "qhtmlview.hpp"
 
-#include "qt/qhtmlview.hpp"
-#include "qt/qmarkdownedit.hpp"
+#include "qmarkdownedit.hpp"
+
+
+QHtmlView::QHtmlView(QWidget* parent)
+    :   QWebView( parent )
+{}
+
+
+QHtmlView::~QHtmlView() {
+    this->disconnect();
+}
+
+
+void QHtmlView::setEditor( QMarkDownEdit* mdEditor ) {
+    QObject::connect( mdEditor, SIGNAL(htmlChanged(QString)), this, SLOT(on_textChanged(QString)) );
+}
+
+
+
+void QHtmlView::on_textChanged( QString html ) {
+    setHtml( html );
+}
+
+
