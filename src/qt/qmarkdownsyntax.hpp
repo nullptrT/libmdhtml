@@ -23,9 +23,48 @@
 	USA
 */
 
-
 #pragma once
 
-#include "qt/qhtmlview.hpp"
-#include "qt/qmarkdownedit.hpp"
-#include "qt/qmarkdownsyntax.hpp"
+#include "config.hpp"
+
+#include <QRegularExpression>
+#include <QSyntaxHighlighter>
+
+
+namespace mdhtml {
+
+
+struct QHighlightingRule {
+public:
+    QRegularExpression pattern;
+    QTextCharFormat format;
+};
+
+
+class QMarkDownSyntax
+    :   public QSyntaxHighlighter
+{
+    Q_OBJECT
+    
+    QVector< QHighlightingRule > m_rules;
+    
+    QRegularExpression m_multilineCodeExpr;
+    
+    QTextCharFormat m_boldFormat;
+    QTextCharFormat m_boldItalicFormat;
+    QTextCharFormat m_codeFormat;
+    QTextCharFormat m_commentFormat;
+    QTextCharFormat m_headingFormat;
+    QTextCharFormat m_italicFormat;
+    QTextCharFormat m_listFormat;
+    QTextCharFormat m_strikethroughFormat;
+    
+public:
+    QMarkDownSyntax( QTextDocument* parent = 0 );
+    
+protected:
+    void highlightBlock( const QString& text ) override;
+};
+
+
+} // namespace mdhtml

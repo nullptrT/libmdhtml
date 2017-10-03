@@ -28,12 +28,17 @@
 
 #include <QTextEdit>
 
+namespace mdhtml {
+class QMarkDownSyntax;
+}
+
 
 class QMarkDownEdit
     :   public QTextEdit
 {
     Q_OBJECT
 
+    mdhtml::QMarkDownSyntax* m_syntax;
 public:
     QMarkDownEdit( QWidget* parent = 0 );
     ~QMarkDownEdit();

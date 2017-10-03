@@ -10,12 +10,12 @@ else()
 	set( MDHTML_PKGCONFIG_LIBNAME "libMdHtml++.a" )
 endif()
 
-if( MDHTML_BUILD_BIN )
-    add_subdirectory( bin )
-endif()
-
 if( MDHTML_QT_SUPPORT )
     add_subdirectory( qt )
+endif()
+
+if( MDHTML_BUILD_BIN )
+    add_subdirectory( bin )
 endif()
 
 if( MDHTML_HEADER_INSTALL_DIR )

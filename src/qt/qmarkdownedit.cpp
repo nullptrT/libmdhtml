@@ -27,10 +27,12 @@
 #include "qmarkdownedit.hpp"
 
 #include "../md2html.hpp"
+#include "qmarkdownsyntax.hpp"
 
 
 QMarkDownEdit::QMarkDownEdit( QWidget* parent )
     :   QTextEdit( parent )
+    ,   m_syntax( new mdhtml::QMarkDownSyntax(this->document()) )
 {
     QObject::connect( this, &QTextEdit::textChanged, this, &QMarkDownEdit::on_textChanged );
 }
@@ -48,7 +50,6 @@ const QString QMarkDownEdit::toHtml() const {
 
 void QMarkDownEdit::on_textChanged() {
     std::string html = mdhtml::md2html( toPlainText().toStdString() );
-    
     emit htmlChanged( QString().fromStdString(html) );
     emit markdownChanged( toPlainText() );
 }
