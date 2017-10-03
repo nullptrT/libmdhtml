@@ -1,6 +1,6 @@
 
 if( MDHTML_BUILD_BIN )
-    add_executable( md2html main.cpp )
+    add_executable( md2html main_md2html.cpp )
     target_link_libraries( md2html MdHtml++ )
     
     if( MDHTML_INSTALL_LIBS )
