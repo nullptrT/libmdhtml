@@ -43,8 +43,8 @@ class HtmlTag {
     const std::string join( const unsigned int indent_depth = 4 ) const;
 public:
     HtmlTag( const std::string start_tag
-           , const std::string content
-           , const std::string end_tag
+           , const std::string content = ""
+           , const std::string end_tag = ""
     );
     
     const std::string start_tag() const;
