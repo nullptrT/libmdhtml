@@ -143,7 +143,7 @@ bool isSimpleText( const std::string str ) {
 
 
 
-size_t findEndTag( const std::string str, const size_t start_pos, const std::string tag_pattern, bool no_preceeding_space ) {
+size_t findNextTag( const std::string str, const size_t start_pos, const std::string tag_pattern, bool no_preceeding_space ) {
     
     size_t pos = str.find( tag_pattern, start_pos );
     while ( pos != std::string::npos ) {

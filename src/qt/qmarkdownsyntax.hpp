@@ -56,6 +56,7 @@ class QMarkDownSyntax
     QTextCharFormat m_commentFormat;
     QTextCharFormat m_headingFormat;
     QTextCharFormat m_italicFormat;
+    QTextCharFormat m_linkFormat;
     QTextCharFormat m_listFormat;
     QTextCharFormat m_strikethroughFormat;
     

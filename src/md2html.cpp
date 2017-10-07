@@ -311,7 +311,7 @@ HtmlTag* process_simple_text( const std::string md_text ) {
                                 if ( (char)md_text[c+3] == ' ' ) { // No start tag
                                     continue;
                                 } else { // Find end tag of bold italic
-                                    size_t end_tag = findEndTag( md_text, c+3, "***" );
+                                    size_t end_tag = findNextTag( md_text, c+3, "***" );
                                     if ( end_tag != std::string::npos ) {
                                         // Copy preceeding text
                                         if ( c-current_substr_start > 0 ) {
@@ -337,7 +337,7 @@ HtmlTag* process_simple_text( const std::string md_text ) {
                                 }
                             }
                         } else { // Find end tag of bold
-                            size_t end_tag = findEndTag( md_text, c+2, "**" );
+                            size_t end_tag = findNextTag( md_text, c+2, "**" );
                             if ( end_tag != std::string::npos ) {
                                 // Copy preceeding text
                                 if ( c-current_substr_start > 0 ) {
@@ -359,7 +359,7 @@ HtmlTag* process_simple_text( const std::string md_text ) {
                         }
                     }
                 } else { // Find end tag of italic
-                    size_t end_tag = findEndTag( md_text, c+1, "*" );
+                    size_t end_tag = findNextTag( md_text, c+1, "*" );
                     if ( end_tag != std::string::npos ) {
                         // Copy preceeding text
                         if ( c-current_substr_start > 0 ) {
@@ -382,7 +382,7 @@ HtmlTag* process_simple_text( const std::string md_text ) {
             }
         } else if ( character == '`') { // Possible code tag
             if ( md_text.length() > c+2 ) { // At least 3 characters needed for code tag
-                size_t end_tag = findEndTag( md_text, c+1, "`", false );
+                size_t end_tag = findNextTag( md_text, c+1, "`", false );
                 if ( end_tag != std::string::npos ) {
                     // Copy preceeding text
                     if ( c-current_substr_start > 0 ) {
@@ -410,7 +410,7 @@ HtmlTag* process_simple_text( const std::string md_text ) {
         } else if ( character == '~' ) { // Possible strikethrough tag
             if ( md_text.length() > c+4 ) { // At least 5 characters needed for strikethrough tag
                 if ( (char)md_text[c+1] == '~' && (char)md_text[c+2] != ' ' ) {
-                    size_t end_tag = findEndTag( md_text, c+2, "~~" );
+                    size_t end_tag = findNextTag( md_text, c+2, "~~" );
                     if ( end_tag != std::string::npos ) {
                         // Copy preceeding text
                         if ( c-current_substr_start > 0 ) {
@@ -428,6 +428,65 @@ HtmlTag* process_simple_text( const std::string md_text ) {
                         // Continue iteration after the end_tag
                         current_substr_start = end_tag + 2;
                         c = end_tag + 1; // c is incremented by the loop
+                    }
+                }
+            }
+        } else if ( character == '[') { // Possible link tag
+            if ( md_text.length() > c+3 ) { // At least 4 characters needed for link tag
+                size_t end_caption_tag = findNextTag( md_text, c+1, "](", false );
+                if ( end_caption_tag != std::string::npos ) { // We have a caption for this possible link
+                    size_t end_link_tag = findNextTag( md_text, end_caption_tag+2, ")", false );
+                    if ( end_link_tag != std::string::npos ) {
+                        // Copy preceeding text
+                        if ( c-current_substr_start > 0 ) {
+                            HtmlTag* pre_tag = new HtmlTag("", md_text.substr(current_substr_start, c-current_substr_start), "");
+                            html->addChild( pre_tag );
+                        }
+
+                        // Extract link parts
+                        const std::string caption = md_text.substr(c+1, end_caption_tag-c-1);
+                        const std::string link = md_text.substr(end_caption_tag+2, end_link_tag-end_caption_tag-2);
+                        
+                        // Create code tag
+                        HtmlTag* link_tag = new HtmlTag("<a href=\"" + link + "\">", caption, "</a>");
+                        html->addChild( link_tag );
+
+                        // Continue iteration after the end_tag
+                        current_substr_start = end_link_tag + 1;
+                        c = end_link_tag; // c is incremented by the loop
+                    }
+                }
+            }
+        } else if ( character == '!') { // Possible image tag
+            if ( md_text.length() > c+4 ) { // At least 5 characters needed for image tag
+                size_t start_caption_tag = findNextTag( md_text, c+1, "(", true );
+                if ( start_caption_tag != std::string::npos ) {
+                    size_t end_caption_tag = findNextTag( md_text, start_caption_tag+1, "](", false );
+                    if ( end_caption_tag != std::string::npos ) { // We have a caption for this possible image link
+                        size_t end_link_tag = findNextTag( md_text, end_caption_tag+2, ")", false );
+                        if ( end_link_tag != std::string::npos ) {
+                            // Copy preceeding text
+                            if ( c-current_substr_start > 0 ) {
+                                HtmlTag* pre_tag = new HtmlTag("", md_text.substr(current_substr_start, c-current_substr_start), "");
+                                html->addChild( pre_tag );
+                            }
+
+                            // Extract link parts
+                            const std::string caption = md_text.substr(c+1, end_caption_tag-c-1);
+                            const std::string link = md_text.substr(end_caption_tag+2, end_link_tag-end_caption_tag-2);
+                            
+                            // Create paragraph tag
+                            HtmlTag* p_tag = new HtmlTag("<p>", md_text.substr(c+1, end_link_tag-c-2), "</p>");
+                            html->addChild( p_tag );
+                            
+                            // Create image tag
+                            HtmlTag* image_tag = new HtmlTag("<img src=\"" + link + "\" alt=\"" + caption + "\" />" );
+                            p_tag->addChild( image_tag );
+
+                            // Continue iteration after the end_tag
+                            current_substr_start = end_link_tag + 1;
+                            c = end_link_tag; // c is incremented by the loop
+                        }
                     }
                 }
             }

@@ -49,7 +49,7 @@ bool isMultilineCodeTag( const std::string str );
 bool isNum( const std::string str );
 bool isSimpleText( const std::string str );
 
-size_t findEndTag( const std::string str, const size_t start_pos, const std::string tag_pattern, bool no_preceeding_space = true );
+size_t findNextTag( const std::string str, const size_t start_pos, const std::string tag_pattern, bool no_preceeding_space = true );
 
 const std::string replaceAll( const std::string str, const char search_char, const std::string replace_str );
 const std::string stripWhitespaces( const std::string str );

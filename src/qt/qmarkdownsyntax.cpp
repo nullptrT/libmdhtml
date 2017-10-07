@@ -67,6 +67,13 @@ QMarkDownSyntax::QMarkDownSyntax( QTextDocument* parent )
     m_rules.append( rule );
     rule.pattern = QRegularExpression( "^(\\040){0,2}[0-9]+(\\040){1,1}" );
     m_rules.append( rule );
+
+    // Make rules for all types of links
+    m_linkFormat.setForeground(Qt::darkBlue);
+    m_linkFormat.setFontItalic(true);
+    rule.pattern = QRegularExpression( "(!)*(\\[(.)*\\]){1,1}(\\((.)*\\)){1,1}" );
+    rule.format = m_linkFormat;
+    m_rules.append( rule );
     
     // Make rules for all types of text formatting
     m_boldItalicFormat.setFontWeight(QFont::Bold);
