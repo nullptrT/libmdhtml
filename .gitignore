@@ -1,3 +1,5 @@
 /.project
 /build/*
 /pkg/arch/*
+*.html
+*test*
