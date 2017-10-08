@@ -250,7 +250,8 @@ HtmlTag* process_something( HtmlTag* root_tag ) {
         else if ( root_tag->start_tag() == "<html>" && isSimpleText(md_line) ) { // Paragraph
 
             size_t end_pos = l;
-            while ( isSimpleText(md_lines.at(end_pos))
+            while ( ( isSimpleText(md_lines.at(end_pos))
+                   || isMultilineCodeTag(md_lines.at(end_pos)) )
                  && end_pos < md_lines.size() - 1
             ) {
                 ++end_pos;
