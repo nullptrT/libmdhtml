@@ -1,0 +1,9 @@
+libdir=@MDHTML_LIB_INSTALL_DIR@
+includedir=@MDHTML_HEADER_INSTALL_DIR@
+
+Name: LibMdHtml++
+Description: A library for converting markdown to html
+Version: @LIBMDHTML_VERSION@
+Libs: ${libdir}/@MDHTML_PKGCONFIG_LIBNAME@
+Cflags: -I${includedir}
+
