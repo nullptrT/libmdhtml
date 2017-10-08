@@ -4,6 +4,6 @@ includedir=@MDHTML_HEADER_INSTALL_DIR@
 Name: LibMdHtmlQt
 Description: A Qt support library for converting markdown to html with LibMdHtml++
 Version: @LIBMDHTML_VERSION@
-Libs: ${libdir}/@MDHTML_PKGCONFIG_LIBNAME@
+Libs: ${libdir}/@MDHTML_PKGCONFIG_LIBNAME@ ${libdir}/@MDHTMLQT_PKGCONFIG_LIBNAME@
 Cflags: -I${includedir} -I${includedir}/qt
 
