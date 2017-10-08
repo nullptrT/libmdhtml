@@ -82,11 +82,11 @@ QMarkDownSyntax::QMarkDownSyntax( QTextDocument* parent )
     rule.format = m_boldItalicFormat;
     m_rules.append( rule );
     m_boldFormat.setFontWeight(QFont::Bold);
-    rule.pattern = QRegularExpression( "(\\*\\*){1,1}(.)*(\\*\\*){1,1}" );
+    rule.pattern = QRegularExpression( "[\\*](\\*\\*){1,1}[\\*](.)*[\\*](\\*\\*){1,1}[\\*]" );
     rule.format = m_boldFormat;
     m_rules.append( rule );
     m_italicFormat.setFontItalic( true );
-    rule.pattern = QRegularExpression( "(\\*){1,1}(.)*(\\*){1,1}" );
+    rule.pattern = QRegularExpression( "[\\*\\*](\\*){1,1}[\\*\\*](.)*[\\*\\*](\\*){1,1}[\\*\\*]" );
     rule.format = m_italicFormat;
     m_rules.append( rule );
     m_strikethroughFormat.setForeground(Qt::darkRed);
