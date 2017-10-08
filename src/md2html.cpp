@@ -222,11 +222,19 @@ HtmlTag* process_something( HtmlTag* root_tag ) {
             root_tag->addChild( new HtmlTag("<hr>", "", "") );
         } else if ( isMultilineCodeTag( md_line ) ) {
 
+            if ( l == md_lines.size() - 1 ) {
+                continue;
+            }
+
             size_t end_pos = l + 1;
             while ( !isMultilineCodeTag(md_lines.at(end_pos))
                  && end_pos < md_lines.size() - 1
             ) {
                 ++end_pos;
+            }
+
+            if ( !isMultilineCodeTag(md_lines.at(end_pos)) ) {
+                continue;
             }
 
             std::string str = globSection( md_lines, l + 1, end_pos-l-2 );
