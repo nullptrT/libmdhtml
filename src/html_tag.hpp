@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include "config.hpp"
+#include "config_mdhtml.hpp"
 
 #include <string>
 #include <vector>
