@@ -96,6 +96,7 @@ QMarkDownSyntax::QMarkDownSyntax( QTextDocument* parent )
     
     // Make rules for all types of code
     m_codeFormat.setForeground(Qt::darkYellow);
+    m_codeFormat.setFontStyleHint(QFont::Monospace);
     rule.pattern = QRegularExpression( "(`){1,1}(.)*(`){1,1}" );
     rule.format = m_codeFormat;
     m_rules.append( rule );
@@ -127,15 +128,19 @@ void QMarkDownSyntax::highlightBlock( const QString& text ) {
         QRegularExpressionMatch match = m_multilineCodeExpr.match( text, start );
         int end = match.capturedStart();
         int codeLen = 0;
-        if ( end == -1 ) {
+        if ( end != -1 ) {
             setCurrentBlockState(1);
-            codeLen = text.length() - start;
-        } else {
             codeLen = end - start + match.capturedLength();
+        } else {
+            break;
         }
         
         setFormat( start, codeLen, m_codeFormat );
         start = text.indexOf( m_multilineCodeExpr, start + codeLen );
+    }
+    if ( previousBlockState() == 1 ) {
+        setFormat( 0, text.length(), m_codeFormat );
+        setCurrentBlockState(1);
     }
 }
 
