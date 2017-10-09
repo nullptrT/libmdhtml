@@ -1,5 +1,6 @@
 /**
  * @brief
+ * @package LibMdHtmlQt
  * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
  **/
 /*
@@ -34,36 +35,86 @@
 namespace mdhtml {
 
 
+/**
+ * @brief A struct representing a syntax highlighting rule
+ */
 struct QHighlightingRule {
-public:
+    /**
+     * @brief The regular expression used for pattern-matching of this rule
+     */
     QRegularExpression pattern;
+    /**
+     * @brief The QTextCharFormat to be applied if pattern is matched
+     */
     QTextCharFormat format;
 };
 
 
+/**
+ * @brief A class containing rules and functions for matching and highlighting markdown syntax in a QTextDocument
+ */
 class QMarkDownSyntax
     :   public QSyntaxHighlighter
 {
     Q_OBJECT
     
-    QVector< QHighlightingRule > m_rules;
-    
     QRegularExpression m_multilineCodeExpr;
     
+protected:
+    /**
+     * @brief All simple rules
+     */
+    QVector< QHighlightingRule > m_rules;
+    
+    /**
+     * @brief The formatting for matched bold markdown
+     */
     QTextCharFormat m_boldFormat;
+    /**
+     * @brief The formatting for matched bold+italic markdown
+     */
     QTextCharFormat m_boldItalicFormat;
+    /**
+     * @brief The formatting for matched code markdown
+     */
     QTextCharFormat m_codeFormat;
+    /**
+     * @brief The formatting for matched comment markdown
+     */
     QTextCharFormat m_commentFormat;
+    /**
+     * @brief The formatting for matched heading markdown
+     */
     QTextCharFormat m_headingFormat;
+    /**
+     * @brief The formatting for matched italic markdown
+     */
     QTextCharFormat m_italicFormat;
+    /**
+     * @brief The formatting for matched link markdown
+     */
     QTextCharFormat m_linkFormat;
+    /**
+     * @brief The formatting for matched list and enumeration item markdown
+     */
     QTextCharFormat m_listFormat;
+    /**
+     * @brief The formatting for matched strikethrough markdown
+     */
     QTextCharFormat m_strikethroughFormat;
     
 public:
+    /**
+     * @brief Constructor. Installs this new QMarkDownSyntax object on parent
+     * @param parent The QTextDocument this QMarkDownSyntax should match and manipulate
+     */
     QMarkDownSyntax( QTextDocument* parent = 0 );
     
 protected:
+    /**
+     * @brief The highlighting function for matching and highlighting of a text block
+     * @param text The text block to manipulate
+     */
     void highlightBlock( const QString& text ) override;
 };
 

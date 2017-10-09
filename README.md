@@ -1,4 +1,4 @@
-# LibMdHtml++
+# LibMdHtml
 ##### A library for converting markdown to html
 ###### v0.3.0
 
@@ -9,12 +9,12 @@
 * Markdown for headings, simple text formatting and lists
 * CMake and pkgconfig files
 * Syntax highlighting for Qt
+* Documentation
 * PKGBUILD for Arch Linux
 
 ###### Future features
 
 * Support all Markdown formats including tables
-* Add documentation
 * Test on windows
 
 ___

@@ -40,7 +40,9 @@ QHtmlView::~QHtmlView() {
 
 
 void QHtmlView::setEditor( QMarkDownEdit* mdEditor ) {
-    QObject::connect( mdEditor, SIGNAL(htmlChanged(QString)), this, SLOT(on_textChanged(QString)) );
+    if ( mdEditor != 0 ) {
+        QObject::connect( mdEditor, SIGNAL(htmlChanged(QString)), this, SLOT(on_textChanged(QString)) );
+    }
 }
 
 

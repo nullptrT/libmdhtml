@@ -55,17 +55,13 @@ const std::string MarkdownDocument::html() const {
 }
 
 
+void MarkdownDocument::update_text(const std::string text) {
+    m_text = text;
+}
+
+
 bool MarkdownDocument::html_toFile( const std::string path ) const {
-    std::ofstream file( path );
-    if ( !file.good() ) {
-        return false;
-    }
-    
-    std::string html = this->html();
-    file << html << std::endl;
-    file.close();
-    
-    return true;
+    return MarkdownDocument::html_toFile( path, this->html() );
 }
 
 

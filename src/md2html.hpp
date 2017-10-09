@@ -33,6 +33,12 @@
 namespace mdhtml {
 
 
+/**
+ * @brief Converts a given multi-line markdown string into a formatted html string
+ * @param markdown_text The markdown string to convert to html
+ * @returns A fully-formatted, indented HTML string
+ * @warning Tables are not supported yet.
+ */
 const std::string md2html( const std::string markdown_text );
 
 

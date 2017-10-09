@@ -205,7 +205,7 @@ std::vector< std::string > tokenize( const std::string str, const std::string de
 	size_t end_pos = str.find( delimiter );
     
     while ( end_pos != std::string::npos ) {
-        tokens.push_back( str.substr(current_start_pos, end_pos-current_start_pos+(dont_strip ? 1 : 0)) );
+        tokens.push_back( str.substr(current_start_pos, end_pos-current_start_pos+(dont_strip ? delimiter.length() : 0)) );
         current_start_pos = end_pos + delimiter.length();
         end_pos = str.find( delimiter, current_start_pos );
     }

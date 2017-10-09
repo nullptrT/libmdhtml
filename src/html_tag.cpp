@@ -81,19 +81,13 @@ const std::string HtmlTag::join( const unsigned int indent_depth ) const {
         html += m_start_tag;
     }
 
-    /*if ( m_content.length() == 0 && m_childs->size() == 0 ) {
-        return html;
-    }*/
-
     if ( m_childs->size() > 0 ) {
         for ( unsigned int c = 0; c < m_childs->size(); c++ ) {
             const std::string child_html = m_childs->at(c)->html( indent_depth + 4 );
-            /*if ( child_html.length() == 0 ) {
-                continue;
-            } else*/ if ( m_start_tag == "<html>"
-                     || m_start_tag == "<li>"
-                     || m_start_tag == "<ul>"
-                     || m_start_tag == "<ol>"
+            if ( m_start_tag == "<html>"
+              || m_start_tag == "<li>"
+              || m_start_tag == "<ul>"
+              || m_start_tag == "<ol>"
             ) {
                 html += "\n" + indent( indent_depth + 4 );
             } else if ( m_start_tag == "<pre>" ) {

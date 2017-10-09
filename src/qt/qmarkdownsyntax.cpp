@@ -35,8 +35,8 @@ namespace mdhtml {
 
 QMarkDownSyntax::QMarkDownSyntax( QTextDocument* parent )
     :   QSyntaxHighlighter( parent )
-    ,   m_rules()
     ,   m_multilineCodeExpr( "^(```){1,1}(.)*" )
+    ,   m_rules()
     ,   m_boldFormat()
     ,   m_boldItalicFormat()
     ,   m_codeFormat()

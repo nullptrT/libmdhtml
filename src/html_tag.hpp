@@ -34,27 +34,83 @@
 namespace mdhtml {
 
 
+/**
+ * @brief A class representing a HTML tag with its content or child tags
+ */
 class HtmlTag {
+protected:
+    /**
+     * @brief The start tag of this HTML tag
+     */
     const std::string m_start_tag;
+    /**
+     * @brief The content between start tag and end tag
+     */
     std::string m_content;
+    /**
+     * @brief The end tag of this HTML tag
+     */
     const std::string m_end_tag;
+    /**
+     * @brief A vector containing all child-/sub-tags of this HTML tag
+     */
     std::vector< HtmlTag* >* m_childs;
     
-    const std::string join( const unsigned int indent_depth = 4 ) const;
+    /**
+     * @brief Get a string concatenating the start tag (if any), a joined version of all concatenated child tags (preferred) or the current content of this HtmlTag (if no child tags are found) followed by the end tag, if any.
+     * @param indent_depth The depth of indent to indent child HTML tags with
+     * @returns A string version of this HtmlTag matching the conditions
+     */
+    virtual const std::string join( const unsigned int indent_depth = 4 ) const;
 public:
+    /**
+     * @brief Constructor
+     * @param start_tag The start tag (like "<a href="url">")
+     * @param content The content between start tag and end tag, if any
+     * @param end_tag The end tag (like "</a>")
+     */
     HtmlTag( const std::string start_tag
            , const std::string content = ""
            , const std::string end_tag = ""
     );
     
+    /**
+     * @brief Get the start tag of this HtmlTag
+     * @returns The start tag of this HtmlTag
+     */
     const std::string start_tag() const;
+    /**
+     * @brief Get the current content of this HtmlTag to (e.g. to reprocess it)
+     * @returns The current content of this HtmlTag
+     */
     const std::string content() const;
+    /**
+     * @brief Get the end tag of this HtmlTag, if any.
+     * @returns The end tag of this HtmlTag
+     */
     const std::string end_tag() const;
+    /**
+     * @brief Get all child tags of this HtmlTag
+     * @returns A pointer to the vector containing all sub-tags of this HtmlTag
+     */
     std::vector< HtmlTag* >* childs() const;
     
+    /**
+     * @brief Add a HtmlTag as child. The child may contain a start tag only, content only, or a start tag and a end tag with all possible combination of content/child tags.
+     * @param child A valid HtmlTag. If child == 0, nothing is added
+     */
     void addChild( HtmlTag* child );
+    /**
+     * @brief Append a space character followed by another string to the current content string
+     * @param content The content to append to the current content
+     */
     void appendContent( const std::string content );
     
+    /**
+     * @brief Get a string concatenating the start tag (if any), a joined version of all concatenated child tags (preferred) or the current content of this HtmlTag (if no child tags are found) followed by the end tag, if any.
+     * @param indent_depth The depth of indent to indent child HTML tags with
+     * @returns A string version of this HtmlTag matching the conditions
+     */
     const std::string html( const unsigned int indent_depth = 4 ) const;
 };
 

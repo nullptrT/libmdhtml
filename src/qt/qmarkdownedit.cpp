@@ -49,8 +49,8 @@ const QString QMarkDownEdit::toHtml() const {
 
 
 void QMarkDownEdit::on_textChanged() {
-    std::string html = mdhtml::md2html( toPlainText().toStdString() );
-    emit htmlChanged( QString().fromStdString(html) );
+    QString html = this->toHtml();
+    emit htmlChanged( html );
     emit markdownChanged( toPlainText() );
 }
 

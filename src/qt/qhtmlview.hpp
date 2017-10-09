@@ -1,5 +1,6 @@
 /**
  * @brief
+ * @package LibMdHtmlQt
  * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
  **/
 /*
@@ -31,17 +32,35 @@
 class QMarkDownEdit;
 
 
+/**
+ * @brief A widget class that can display HTML and is reponsive to the changing of the text of a QMarkDownEdit
+ */
 class QHtmlView
     :   public QWebView
 {
     Q_OBJECT
 
 public:
+    /**
+     * @brief Constructor
+     * @param parent The parent widget
+     */
     QHtmlView( QWidget* parent = 0 );
+    /**
+     * @brief Destructor. Disconnects all signals and slots of this object.
+     */
     ~QHtmlView();
     
+    /**
+     * @brief Set the QMarkDownEdit this QHtmlView has to respond to, that means, everytime the QMarkDownEdit object emits &QMarkDownEdit::htmlChanged, the slot &QHtmlView::on_textChanged is called.
+     * @param mdEditor The QMarkDownEdit to connect with. Nothing is connected, if mdEditor == 0. Calling this function multiple times with different parameters connects all QMarkDownEdit objects.
+     */
     void setEditor( QMarkDownEdit* mdEditor );
     
 public slots:
+    /**
+     * @brief Set the received string as HTML content of this QWebView
+     * @param html A HTML string to render
+     */
     void on_textChanged( QString html );
 };

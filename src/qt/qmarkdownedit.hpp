@@ -1,5 +1,6 @@
 /**
  * @brief
+ * @package LibMdHtmlQt
  * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
  **/
 /*
@@ -33,20 +34,43 @@ class QMarkDownSyntax;
 }
 
 
+/**
+ * @brief A widget class that provides a QTextEdit with syntax highlighting for markdown, conversion to HTML and corresponding signals and slots
+ */
 class QMarkDownEdit
     :   public QTextEdit
 {
     Q_OBJECT
 
     mdhtml::QMarkDownSyntax* m_syntax;
+    
 public:
+    /**
+     * @brief Constructor.
+     * @param parent The parent widget
+     */
     QMarkDownEdit( QWidget* parent = 0 );
+    /**
+     * @brief Destructor. Disconnects all signals and slots of this object.
+     */
     ~QMarkDownEdit();
     
+    /**
+     * @brief Get a HTML version of the current markdown text of this QMarkDownEdit
+     * @returns A QString containing the converted content obtained from mdhtml::md2html
+     */
     const QString toHtml() const;
 
 signals:
+    /**
+     * @brief This signal is emitted, when the current HTML has changed
+     * @param html The HTML converted from the current markdown content of this QTextEdit
+     */
     void htmlChanged( QString html );
+    /**
+     * @brief This signal is emitted, when the current markdown text has changed
+     * @param markdown The current content of this QTextEdit
+     */
     void markdownChanged( QString markdown );
 
 private slots:
