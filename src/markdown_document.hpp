@@ -65,6 +65,12 @@ public:
     const std::string html() const;
     
     /**
+     * @brief Append a string to the current text of this MarkdownDocument
+     * @param text The additional text to the current markdown text
+     */
+    void operator+=( const std::string text );
+    
+    /**
      * @brief Set the current text of this MarkdownDocument
      * @param text The updated version of the current markdown text
      */
@@ -84,6 +90,14 @@ public:
      * @returns False, if the file cannot be read.
      */
     static bool html_toFile( const std::string path, const std::string html );
+    
+    /**
+     * @brief Read a file containing markdown text and save the text to this class
+     * @param path The path of the file to read from
+     * @returns False, if the file cannot be read.
+     */
+    
+     bool thisFromFile( const std::string path );
     
     /**
      * @brief Read a file containing markdown text and get a MarkdownDocument containing its text

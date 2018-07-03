@@ -55,6 +55,11 @@ const std::string MarkdownDocument::html() const {
 }
 
 
+void MarkdownDocument::operator+=( const std::string text ) {
+    m_text += text;
+}
+
+
 void MarkdownDocument::update_text(const std::string text) {
     m_text = text;
 }
@@ -74,6 +79,18 @@ bool MarkdownDocument::html_toFile( const std::string path, const std::string ht
     file << html << std::endl;
     file.close();
     
+    return true;
+}
+
+
+bool MarkdownDocument::thisFromFile( const std::string path ) {
+    MarkdownDocument* md = MarkdownDocument::fromFile( path );
+    
+    if ( md == 0 ) {
+        return false;
+    }
+    
+    m_text = md->text();
     return true;
 }
 
