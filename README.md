@@ -16,6 +16,7 @@ This library provides the possibility to create the easy-to-use markdown documen
 
 ###### Future features
 
+* Simple Qt GUI
 * Support all Markdown formats including tables
 * Test on windows
 
@@ -70,7 +71,7 @@ Additionally to the default options CMake currently offers the following options
 
 * `MDHTML_SHARED`: Enables building a
 shared library `libMdHtml++.so`. Not using this option builds a static `libMdHtml++.a` by default.
-* `MDHTML_BUILD_BIN`: Build the command line utility that converts a markdown document into a html document.
+* `MDHTML_DONT_BUILD_BIN`: Don't build the command line utility that converts a markdown document into a html document.
 * `MDHTML_QT_SUPPORT`: Build the libMdHtmlQt
   library providing some widgets and convenience functions for editing markdown with Qt.
 * `MDHTML_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr` on UNIX and `C:\Program Files` on WIN32)

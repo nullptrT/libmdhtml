@@ -14,7 +14,8 @@ if( MDHTML_QT_SUPPORT )
     add_subdirectory( qt )
 endif()
 
-if( MDHTML_BUILD_BIN )
+if( MDHTML_DONT_BUILD_BIN )
+else()
     add_subdirectory( bin )
 endif()
 
