@@ -5,7 +5,7 @@
  **/
 /*
 	LibMdHtml++: A library for converting markdown to html
-	Copyright (C) 2017 Sebastian Lau <lauseb644@gmail.com>
+	Copyright (C) 2017-2018 Sebastian Lau <lauseb644@gmail.com>
 
 
 	This library is free software; you can redistribute it and/or
