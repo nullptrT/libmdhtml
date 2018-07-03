@@ -2,7 +2,9 @@
 ##### A library for converting markdown to html
 ###### v0.4.0
 
+This library provides the possibility to create the easy-to-use markdown documents and convert them to HTML documents.
 
+* A documentation can be found [here](https://doc.0ptr.de/libmdhtml)
 
 #### Currently supported features
 
