@@ -31,7 +31,7 @@
 
 int main(int argc, char *argv[])
 {
-    std::cout << "BibTeX2WebsiteGUI v" << LIBMDHTML_VERSION << " (https://git.0ptr.de/nullptr_t/bibtex2website)" << std::endl;
+    std::cout << "MarkdownToHtmlGUI v" << LIBMDHTML_VERSION << " (https://git.0ptr.de/nullptr_t/libmdhtml)" << std::endl;
     
     QApplication a(argc, argv);
     MainWindow w;
