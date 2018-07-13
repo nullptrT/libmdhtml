@@ -2,12 +2,24 @@
 file (GLOB LIBMDHTML_HEADERS *.hpp )
 file (GLOB LIBMDHTML_SOURCES *.cpp )
 
+include_directories(.)
 if( MDHTML_SHARED )
 	add_library( MdHtml++ SHARED ${LIBMDHTML_SOURCES} )
 	set( MDHTML_PKGCONFIG_LIBNAME "libMdHtml++.so" )
 else()
 	add_library( MdHtml++ STATIC ${LIBMDHTML_SOURCES} )
 	set( MDHTML_PKGCONFIG_LIBNAME "libMdHtml++.a" )
+endif()
+
+if( MDHTML_DONT_BUILD_GUI_CONVERT )
+else()
+    add_subdirectory( gui_convert )
+endif()
+
+if( MDHTML_DONT_BUILD_GUI_EDIT )
+else()
+#    add_definitions( -DMDHTML_QT_SUPPORT=1 )
+#    add_subdirectory( gui_edit )
 endif()
 
 if( MDHTML_QT_SUPPORT )

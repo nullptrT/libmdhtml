@@ -1,6 +1,6 @@
 # LibMdHtml
 ##### A library for converting markdown to html
-###### v0.4.0
+###### v0.5.0
 
 This library provides the possibility to create the easy-to-use markdown documents and convert them to HTML documents.
 
@@ -11,12 +11,13 @@ This library provides the possibility to create the easy-to-use markdown documen
 * Markdown for headings, simple text formatting and lists
 * CMake and pkgconfig files
 * Syntax highlighting for Qt
+* Simple Qt GUI for converting markdown files to html
 * Documentation
 * PKGBUILD for Arch Linux
 
 ###### Future features
 
-* Simple Qt GUI
+* Simple Qt GUI for editing markdown documents with live html preview
 * Support all Markdown formats including tables
 * Test on windows
 
@@ -69,11 +70,10 @@ On windows you may use the `cmake-gui` or `qtcreator` to create build files for 
 
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
-* `MDHTML_SHARED`: Enables building a
-shared library `libMdHtml++.so`. Not using this option builds a static `libMdHtml++.a` by default.
+* `MDHTML_SHARED`: Enables building a shared library `libMdHtml++.so`. Not using this option builds a static `libMdHtml++.a` by default.
 * `MDHTML_DONT_BUILD_BIN`: Don't build the command line utility that converts a markdown document into a html document.
-* `MDHTML_QT_SUPPORT`: Build the libMdHtmlQt
-  library providing some widgets and convenience functions for editing markdown with Qt.
+* `MDHTML_DONT_BUILD_GUI_CONVERT`: Don't build the QtGUI for converting markdown documents to html documents.
+* `MDHTML_QT_SUPPORT`: Build the libMdHtmlQt library providing some widgets and convenience functions for editing markdown with Qt.
 * `MDHTML_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr` on UNIX and `C:\Program Files` on WIN32)
 * `MDHTML_HEADER_INSTALL_DIR`: Can be set to control, where headers are installed. Defaults to `MDHTML_DESTDIR/include/libMDHTML`.
 * `MDHTML_LIB_INSTALL_DIR`: Can be set to control where the library is installed. Defaults to `MDHTML_DESTDIR/lib`.
